@@ -17,9 +17,12 @@ setup(
     maintainer_email='suberkut76@gmail.com',
     description='TODO: Package description',
     license='TODO: License declaration',
-    tests_require=['pytest'],
+    # tests_require=['pytest'],
     entry_points={
         'console_scripts': [
+            "multirotor_takeoff_land = practice_control.multirotor_takeoff_land:main",
+            "multirotor_flight = practice_control.multirotor_flight:main",
+            "multirotor_flight_velocity = practice_control.multirotor_flight_velocity:main",
         ],
     },
 )
