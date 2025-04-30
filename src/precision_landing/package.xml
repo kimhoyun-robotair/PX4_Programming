@@ -1,14 +1,11 @@
 <?xml version="1.0"?>
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
-  <name>fixed_control</name>
+  <name>precision_landing</name>
   <version>0.0.0</version>
-  <description>
-  Fixed Wing Control by PX4 with ROS2
-  Code from https://stella47.tistory.com/564
-  </description>
-  <maintainer email="suberkut76@gmail.com">kimhoyun-robotair</maintainer>
-  <license>BSD-3</license>
+  <description>TODO: Package description</description>
+  <maintainer email="suberkut76@gmail.com">kimhoyun</maintainer>
+  <license>TODO: License declaration</license>
 
   <depend>rclpy</depend>
   <depend>px4_msgs</depend>

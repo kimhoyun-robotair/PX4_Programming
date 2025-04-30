@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
-  <name>practice_control</name>
+  <name>px4_control_wgs84</name>
   <version>0.0.0</version>
-  <description>Practice PX4 Offboard Control with ROS2</description>
+  <description>TODO: Package description</description>
   <maintainer email="suberkut76@gmail.com">kimhoyun</maintainer>
   <license>TODO: License declaration</license>
 

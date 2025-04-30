@@ -1,6 +1,6 @@
 from setuptools import find_packages, setup
 
-package_name = 'practice_control'
+package_name = 'precision_landing'
 
 setup(
     name=package_name,
@@ -17,13 +17,9 @@ setup(
     maintainer_email='suberkut76@gmail.com',
     description='TODO: Package description',
     license='TODO: License declaration',
-    # tests_require=['pytest'],
+    tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            "multirotor_takeoff_land = practice_control.multirotor_takeoff_land:main",
-            "multirotor_flight = practice_control.multirotor_flight:main",
-            "multirotor_flight_velocity = practice_control.multirotor_flight_velocity:main",
-            "fixedwing_takeoff_land = practice_control.fixedwing_takeoff_land:main",
         ],
     },
 )
