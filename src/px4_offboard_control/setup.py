@@ -23,9 +23,9 @@ setup(
             "fixedwing_offboard_control = px4_offboard_control.fixedwing_offboard_control:main",
             "fixedwing_takeoff_land = px4_offboard_control.fixedwing_takeoff_land:main",
             "multicopter_offboard_control = px4_offboard_control.multicopter_offboard_control:main",
-            "multicopter_takeoff_land = px4_offboard_control.multicopter_takeoff_land:main",
-            "multicopter_flight_velocity = px4_offboard_control.multicopter_flight_velocity:main",
-            "multicopter_flight = px4_offboard_control.multicopter_flight:main",
+            "multirotor_takeoff_land = px4_offboard_control.multirotor_takeoff_land:main",
+            "multirotor_flight_velocity = px4_offboard_control.multirotor_flight_velocity:main",
+            "multirotor_flight = px4_offboard_control.multirotor_flight:main",
         ],
     },
 )

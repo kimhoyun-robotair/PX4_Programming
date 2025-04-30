@@ -24,6 +24,9 @@ setup(
     # tests_require=['pytest'],
     entry_points={
         'console_scripts': [
+            "multirotor_control = px4_control_wgs84.multirotor_control:main",
+            "fixedwing_control = px4_control_wgs84.fixedwing_control:main",
+            "vtol_control = px4_control_wgs84.vtol_control:main",
         ],
     },
 )
