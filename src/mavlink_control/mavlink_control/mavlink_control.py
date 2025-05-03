@@ -4,7 +4,6 @@
 import rclpy
 import numpy as np
 import math
-import time
 from rclpy.node import Node
 from rclpy.qos import QoSProfile, QoSHistoryPolicy, QoSDurabilityPolicy, QoSReliabilityPolicy
 
@@ -114,9 +113,11 @@ class OffboardControl(Node):
         self.current_waypoint_index = 0
         self.current_heading = 0.0
 
+        # 선회 반경과 선회 시간 지정
         self.loiter_radius = 30.0
         self.loiter_time = 10.0
 
+        # 경로점 및 지정 고도 도달 판정 기준
         self.declare_parameter("threshold_range", 2.0)
         self.threshold_range = self.get_parameter("threshold_range").value
 
@@ -129,6 +130,10 @@ class OffboardControl(Node):
         
         self.current_wp = self.waypoints[0]
         self.point = 0
+
+        # 초기 YAW 계산을 위한 고정값 설정
+        self.ref_lat = 35.069019
+        self.ref_lon = 128.086364
 
         # timer 콜백 함수 설정   
         self.timer = self.create_timer(0.2, self.timer_callback)
@@ -192,18 +197,6 @@ class OffboardControl(Node):
 
         return {'lat': lat_center, 'lon': lon_center}
 
-    def get_waypoint_direction(self, current_lat, current_lon, next_lat, next_lon):
-        bearing_to_waypoint = self.calculate_bearing(current_lat, current_lon, next_lat, next_lon)
-        relative_angle = bearing_to_waypoint - self.current_heading
-
-        # Normalize the angle to be between -pi and pi
-        relative_angle = (relative_angle + math.pi) % (2 * math.pi) - math.pi
-
-        if relative_angle > 0:
-            return "right"
-        else:
-            return "left"
-
 ######################## Callback Functions #######################
                 # Functions for subscribing messages
     def vehicle_attitude_callback(self, vehicle_attitude):
@@ -244,12 +237,13 @@ class OffboardControl(Node):
         self.get_logger().info("Switching to land mode")
 
     def takeoff(self):
+        target_yaw = self.calculate_bearing(self.ref_lat, self.ref_lon, self.waypoints[0]["lat"], self.waypoints[0]["lon"])
         self.publish_vehicle_command(
             VehicleCommand.VEHICLE_CMD_NAV_TAKEOFF,
             param1=0.0,
             param2=0.0,
             param3=0.0,
-            param4=float('nan'),  # Yaw
+            param4=float(target_yaw),  # Yaw
             param5=float('nan'),  # Latitude
             param6=float('nan'),  # Longitude
             param7=self.initial_takeoff_altitude
