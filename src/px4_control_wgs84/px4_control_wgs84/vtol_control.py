@@ -347,7 +347,7 @@ class OffboardControl(Node):
                 self.pos_y = 0.0
                 self.pos_z = self.takeoff_height
                 # self.pos_yaw = np.rad2deg(self.vehicle_euler[0])
-                self.pos_yaw = self.get_attitude(self.ned_waypoints["WP0"], self.ned_waypoints["WP1"])
+                self.pos_yaw = self.get_attitude(self.ned_waypoints["WP0"], self.ned_waypoints["WP2"])
                 self.engage_offboard_mode()
             if self.offboard_setpoint_counter == 9:
                 self.arm()
