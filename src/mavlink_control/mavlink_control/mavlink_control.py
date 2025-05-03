@@ -237,13 +237,12 @@ class OffboardControl(Node):
         self.get_logger().info("Switching to land mode")
 
     def takeoff(self):
-        target_yaw = self.calculate_bearing(self.ref_lat, self.ref_lon, self.waypoints[0]["lat"], self.waypoints[0]["lon"])
         self.publish_vehicle_command(
             VehicleCommand.VEHICLE_CMD_NAV_TAKEOFF,
             param1=0.0,
             param2=0.0,
             param3=0.0,
-            param4=float(target_yaw),  # Yaw
+            param4=float('nan'),  # Yaw
             param5=float('nan'),  # Latitude
             param6=float('nan'),  # Longitude
             param7=self.initial_takeoff_altitude
@@ -281,6 +280,7 @@ class OffboardControl(Node):
 
     def adjust_yaw_and_altitude(self, target_yaw, target_altitude):
         target_yaw_deg = math.degrees(target_yaw)
+        target_yaw_deg += math.degrees(self.current_heading)
         self.publish_vehicle_command(
             VehicleCommand.VEHICLE_CMD_DO_REPOSITION,
             param1=-1.0,  # Default ground speed
@@ -462,7 +462,7 @@ class OffboardControl(Node):
 
         elif self.flight_stage == "ADJUST_YAW_AND_ALTITUDE":
             if self.current_target_altitude <= self.final_altitude:
-                next_wp = self.waypoints[1]  # First waypoint
+                next_wp = self.waypoints[0]  # First waypoint
                 target_yaw = self.calculate_bearing(
                     self.current_position["lat"], self.current_position["lon"],
                     next_wp["lat"], next_wp["lon"]
