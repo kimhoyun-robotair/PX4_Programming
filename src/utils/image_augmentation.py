@@ -14,7 +14,7 @@ DST_DIR.mkdir(parents=True, exist_ok=True)
 BLUR_KERNELS    = [(3, 3), (5, 5)]                  # 2
 GAUSS_NOISE_STD = [3, 7, 11]                        # 3
 TRANSLATIONS    = [0, 5]                            # 2
-ROT_ANGLES      = list(range(-20, 21, 10))          # 5  (-20,-10,0,10,20)
+ROT_ANGLES      = list(range(-90, 91, 10))          # 5  (-20,-10,0,10,20)
 PERS_WARP_RATIO = [0.05, 0.10]                      # 2
 MAX_OUTPUTS     = 10_000
 LOG_STEP        = 1_000
