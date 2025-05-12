@@ -56,3 +56,7 @@ Package without launch file:
 This package is designed to be run directly via ros2 run.
 
 Refer to the launch/ directory and the setup.py file to understand how to run each node.
+
+---
+
+**Please note that all packages are developed targeting PX4 firmware version 1.15.**
