@@ -5,6 +5,7 @@ This repository contains example packages for controlling **PX4** using **MAVLin
 📚 It is recommended to read this repository alongside the documentation linked below:  
 🔗 [Notion Documentation](https://juicy-beef-295.notion.site/PX4-1d04af2187bc80ef976cf3d4c5527ecf)
 
+**Please note that all packages are developed targeting PX4 firmware version 1.15.**
 ---
 
 ## 📦 Included Packages
@@ -56,7 +57,3 @@ Package without launch file:
 This package is designed to be run directly via ros2 run.
 
 Refer to the launch/ directory and the setup.py file to understand how to run each node.
-
----
-
-**Please note that all packages are developed targeting PX4 firmware version 1.15.**
