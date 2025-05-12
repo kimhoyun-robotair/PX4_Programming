@@ -7,7 +7,7 @@
     topic_vehicle_command: "/fmu/in/vehicle_command"
     # topic_vehicle_local_position: "/fmu/out/vehicle_local_position"
     topic_vehicle_attitude: "/fmu/out/vehicle_attitude"
-    topic_vehicle_status: "/fmu/out/vehicle_status_v1"
+    topic_vehicle_status: "/fmu/out/vehicle_status"
     topic_vehicle_global_position: "/fmu/out/vehicle_global_position"
     
     # 거리에 도착했는지 아닌지를 판독하기 위해서 필요한 값
