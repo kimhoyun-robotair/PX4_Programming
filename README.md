@@ -6,6 +6,7 @@ This repository contains example packages for controlling **PX4** using **MAVLin
 🔗 [Notion Documentation](https://juicy-beef-295.notion.site/PX4-1d04af2187bc80ef976cf3d4c5527ecf)
 
 **Please note that all packages are developed targeting PX4 firmware version 1.15.**
+
 ---
 
 ## 📦 Included Packages
@@ -26,6 +27,10 @@ This repository contains example packages for controlling **PX4** using **MAVLin
 - **`px4-offboard`**  
   An official PX4 example that performs circular motion after takeoff using ROS 2-based PX4 control.
 
+- **`mavlink_control`**
+  Converts GPS coordinates given in **WGS84** to **local NED coordinates**, enabling long-range autonomous flights with Mission mode using MAVLink and ROS2 Both.
+  Supports **VTOL**.
+
 ---
 
 ## 🛠️ Installation
@@ -44,15 +49,16 @@ source install/setup.bash
 ## ▶️ Usage
 Packages with launch files:
 
-- px4_control_wgs84
-- precision_landing
-- px4-offboard
+- **px4_control_wgs84**
+- **precision_landing**
+- **px4-offboard**
+- **mavlink_control**
 
 These can be launched using standard ROS 2 launch commands.
 
 Package without launch file:
 
-- px4_offboard_control
+- **px4_offboard_control**
 
 This package is designed to be run directly via ros2 run.
 
