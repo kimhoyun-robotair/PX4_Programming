@@ -31,6 +31,11 @@ This repository contains example packages for controlling **PX4** using **MAVLin
   Converts GPS coordinates given in **WGS84** to **local NED coordinates**, enabling long-range autonomous flights with Mission mode using MAVLink and ROS2 Both.
   Supports **VTOL**.
 
+- **`multirotor_control`**
+  Contains offboard control example code for multirotors, using {WGS84} coordinates to perform long-range autonomous flight.
+
+- **`fixedwing_control`**
+  Contains offboard control example code for fixed-wing aircraft, using {WGS84} coordinates to perform long-range autonomous flight.
 ---
 
 ## 🛠️ Installation
@@ -53,6 +58,8 @@ Packages with launch files:
 - **precision_landing**
 - **px4-offboard**
 - **mavlink_control**
+- **multirotor_control**
+- **fixedwing_control**
 
 These can be launched using standard ROS 2 launch commands.
 
