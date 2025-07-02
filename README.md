@@ -36,6 +36,9 @@ This repository contains example packages for controlling **PX4** using **MAVLin
 
 - **`fixedwing_control`**
   Contains offboard control example code for fixed-wing aircraft, using {WGS84} coordinates to perform long-range autonomous flight.
+
+- **`vtol_control`**
+  vtol_control Implements and validates transition and reverse transition for VTOL, and contains offboard control example code that uses {WGS84} coordinates for long-range autonomous flight.
 ---
 
 ## 🛠️ Installation
