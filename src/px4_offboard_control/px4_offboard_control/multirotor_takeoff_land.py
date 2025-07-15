@@ -13,7 +13,7 @@ from rclpy.qos import QoSProfile, QoSHistoryPolicy, QoSDurabilityPolicy, QoSReli
 from px4_msgs.msg import OffboardControlMode, VehicleCommand, VehicleStatus
 from px4_msgs.msg import TrajectorySetpoint, VehicleAttitudeSetpoint
 from px4_msgs.msg import VehicleLocalPosition, VehicleAttitude, VehicleRatesSetpoint
-
+np.float = float
 from tf_transformations import euler_from_quaternion, quaternion_from_euler
 
 class OffboardControl(Node):
@@ -48,11 +48,12 @@ class OffboardControl(Node):
 
         self.state = 0
         self.offboard_setpoint_counter = 0
+        self.runtime = 0
         self.vehicle_local_position = VehicleLocalPosition()
         self.vehicle_attitude = VehicleAttitude()
         self.vehicle_status = VehicleStatus()
 
-        self.takeoff_height = -20.0
+        self.takeoff_height = -5.0
         self.pos_x = 0.0
         self.pos_y = 0.0
         self.pos_z = 0.0
@@ -159,15 +160,14 @@ class OffboardControl(Node):
                 self.engage_offboard_mode()
             if self.offboard_setpoint_counter == 9:
                 self.arm()
-
+            self.runtime += 1
             self.publish_position_setpoint(self.pos_x, self.pos_y, self.pos_z, self.pos_yaw)
             self.dist = self.get_distance()
             print("Pxyz {:6.2f}, {:6.2f}, {:6.2f}".format(self.vehicle_local_position.x,
                                                           self.vehicle_local_position.y,
                                                           self.vehicle_local_position.z), end=' ')
             print(" / Move to Home")
-            if(self.vehicle_local_position.z <= self.takeoff_height + 1 and
-               self.vehicle_status.nav_state == VehicleStatus.NAVIGATION_STATE_OFFBOARD):
+            if self.runtime >= 1500:
                 self.state = 1
 
         elif self.state == 1:
