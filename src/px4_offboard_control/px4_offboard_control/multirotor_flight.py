@@ -14,9 +14,10 @@ import math
 
 from px4_msgs.msg import OffboardControlMode, VehicleCommand, VehicleStatus
 from px4_msgs.msg import TrajectorySetpoint, VehicleAttitudeSetpoint
-from px4_msgs.msg import VehicleLocalPosition, VehicleAttitude, VehicleRatesSetpoint
+from px4_msgs.msg import VehicleLocalPosition, VehicleAttitude
 
-from tf_transformations import euler_from_quaternion, quaternion_from_euler
+np.float = float
+from tf_transformations import euler_from_quaternion
 
 class OffboardControl(Node):
     def __init__(self):
@@ -50,17 +51,19 @@ class OffboardControl(Node):
 
         self.state = "" # 각 WP 및 이착륙 판단
         self.offboard_setpoint_counter = 0
+        self.vehicle_attitude = VehicleAttitude()
         self.vehicle_local_position = VehicleLocalPosition()
         self.vehicle_status = VehicleStatus()
-        self.takeoff_height = -20.0
+        self.takeoff_height = -5.0
+        self.runtime = 0
         self.pos_x = 0.0
         self.pos_y = 0.0
         self.pos_z = 0.0
         self.pos_yaw = 0.0
         self.dist = 0.0
         self.wp1 = [20, 10, -5]
-        self.wp2 = [10, 40, -15]
-        self.wp3 = [0, 0, -10]
+        self.wp2 = [10, 40, -5]
+        self.wp3 = [0, 0, -3]
         self.current_wp = [self.pos_x, self.pos_y, self.pos_z]
 
         self.timer = self.create_timer(0.01, self.timer_callback)
@@ -170,6 +173,7 @@ class OffboardControl(Node):
                 self.offboard_setpoint_counter += 1
 
             self.offboard_setpoint_counter %= 11
+            self.runtime += 1
 
             if self.offboard_setpoint_counter < 5:
                 self.pos_x = 0.0
@@ -188,8 +192,7 @@ class OffboardControl(Node):
                                                           self.vehicle_local_position.y,
                                                           self.vehicle_local_position.z), end=' ')
             print(" / Move to Home")
-            if(self.vehicle_local_position.z <= self.takeoff_height + 1 and
-               self.vehicle_status.nav_state == VehicleStatus.NAVIGATION_STATE_OFFBOARD):
+            if(self.runtime > 1000):
                 self.state = "TAKEOFF"
 
         elif self.state == "TAKEOFF":

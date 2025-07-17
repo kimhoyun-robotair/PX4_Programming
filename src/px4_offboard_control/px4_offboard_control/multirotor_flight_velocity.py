@@ -17,7 +17,8 @@ from px4_msgs.msg import OffboardControlMode, VehicleCommand, VehicleStatus
 from px4_msgs.msg import TrajectorySetpoint, VehicleAttitudeSetpoint
 from px4_msgs.msg import VehicleLocalPosition, VehicleAttitude, VehicleRatesSetpoint
 
-from tf_transformations import euler_from_quaternion, quaternion_from_euler
+np.float = float
+from tf_transformations import euler_from_quaternion
 
 class OffboardControl(Node):
     def __init__(self):
@@ -54,7 +55,8 @@ class OffboardControl(Node):
         self.vehicle_local_position = VehicleLocalPosition()
         self.vehicle_attitude = VehicleAttitude()
         self.vehicle_status = VehicleStatus()
-        self.takeoff_height = -20.0
+        self.takeoff_height = -3.0
+        self.runtime = 0
         self.pos_x = 0.0
         self.pos_y = 0.0
         self.pos_z = 0.0
@@ -179,6 +181,7 @@ class OffboardControl(Node):
             if(self.offboard_setpoint_counter < 10):
                 self.offboard_setpoint_counter += 1
             self.offboard_setpoint_counter %= 11
+            self.runtime += 1
             if self.offboard_setpoint_counter < 5:
                 self.pos_x = 0.0
                 self.pos_y = 0.0
@@ -194,14 +197,14 @@ class OffboardControl(Node):
                                                           self.vehicle_local_position.y,
                                                           self.vehicle_local_position.z), end=' ')
             print(" / Move to Home")
-            if(self.vehicle_local_position.z <= self.takeoff_height + 1 and
-               self.vehicle_status.nav_state == VehicleStatus.NAVIGATION_STATE_OFFBOARD):
+            if(self.runtime > 700):
                 self.state = "TAKEOFF"
+                self.runtime = 0
 
         elif self.state == "TAKEOFF":
             self.publish_heartbeat_ob_vel_sp()
-            self.pos_x = 5.0
-            self.pos_y = 2.0
+            self.pos_x = 1.0
+            self.pos_y = 1.0
             self.pos_z = 0.0
             self.pos_yaw = 45.0
             self.publish_velocity_setpoint(self.pos_x, self.pos_y, self.pos_z, self.pos_yaw)
@@ -210,14 +213,14 @@ class OffboardControl(Node):
                                                           self.vehicle_local_position.vy,
                                                           self.vehicle_local_position.vz), end=' ')
             print(" / Vxyz = 5.0, 2.0, 0.0")
-            if self.offboard_setpoint_counter == 5000:
+            if self.offboard_setpoint_counter == 300:
                 self.state = "WP1"
                 self.offboard_setpoint_counter = 0
 
         elif self.state == "WP1":
             self.publish_heartbeat_ob_vel_sp()
-            self.pos_x = 3.0
-            self.pos_y = 8.0
+            self.pos_x = -1.0
+            self.pos_y = 1.0
             self.pos_z = 0.0
             self.pos_yaw = -60.0
             self.publish_velocity_setpoint(self.pos_x, self.pos_y, self.pos_z, self.pos_yaw)
@@ -226,7 +229,7 @@ class OffboardControl(Node):
                                                           self.vehicle_local_position.vy,
                                                           self.vehicle_local_position.vz), end=' ')
             print(" / Vxyz = 3.0, 8.0, 0.0")
-            if self.offboard_setpoint_counter == 5000:
+            if self.offboard_setpoint_counter == 300:
                 self.state = "WP2"
                 self.offboard_setpoint_counter = 0
 
@@ -234,7 +237,7 @@ class OffboardControl(Node):
             self.publish_heartbeat_ob_pos_sp()
             self.pos_x = 0.0
             self.pos_y = 0.0
-            self.pos_z = -10.0
+            self.pos_z = -3.0
             self.pos_yaw = np.rad2deg(self.vehicle_euler[0])
             self.dist = self.get_distance()
 
